@@ -1,0 +1,14 @@
+#map2 {
+    width : 75%;
+    height : 1200px;
+    border-radius : 20px;
+}
+.div_selling_list {
+    width : 25%;
+    height : 1200px;
+    overflow : scroll;
+}
+.div_selling_info {
+    display : flex;
+    flex-direction : row;
+}

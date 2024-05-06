@@ -1,0 +1,7 @@
+.div_selling_detail_memo {
+    border : 2px solid #90A4AE;
+    box-sizing: border-box;
+    width : 1000px;
+    height : 400px;
+    overflow : scroll;
+}

@@ -1,0 +1,16 @@
+.link_box {
+    box-sizing : border-box;
+    width : 200px;
+    height : 200px;
+    margin : 10px;
+    font : normal 800 normal 17px/21px system-ui;
+    text-align : center;
+    border : 3px solid orange;
+    line-height : 200px; /* div 안의 글자 세로방향 가운데 정렬 : height와 동일하게 */
+}
+.link_box_list {
+    display : flex;
+    flex-flow : row wrap;
+    justify-content : center; /* flex-start */
+    /* align-content : center; */
+}

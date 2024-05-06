@@ -1,0 +1,20 @@
+.reply_chk_LV3 {
+    width : 22px;
+    height : 22px;
+    margin-left : 34px;
+}
+.reply_open_close_LV3 {
+    padding : 0px;
+    border-width : 1px;
+    width : 22px;
+    height : 22px;
+}
+.reply_add_LV3, .reply_del_LV3, .reply_mod_LV3 {
+    height : 28px;
+}
+.div_replynode_LV3 {
+    display : flex;
+    flex-direction : row;
+    flex-wrap : wrap;
+    align-items : center;
+}

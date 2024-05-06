@@ -1,0 +1,15 @@
+.div_selling_item {
+    box-sizing : border-box;
+    border : 2px solid #FFCC80;
+    margin : 3px 0px;
+    border-radius : 20px;
+    padding : 0px 10px;
+}
+.div_selling_item:hover {
+    border-color : #7B1FA2;
+    border-width : 5px;
+}
+/*
+칼라팔레트
+https://materialui.co/colors/
+*/

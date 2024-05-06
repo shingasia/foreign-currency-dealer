@@ -1,0 +1,21 @@
+.div_newreply {
+    display : flex;
+    flex-direction : row;
+    flex-wrap : wrap;
+    align-items : end;
+}
+.txt_newreply_contentLV1 {
+    margin-left : 4px;
+}
+.txt_newreply_contentLV2 {
+    margin-left : 19px;
+}
+.txt_newreply_contentLV3 {
+    margin-left : 34px;
+}
+.txt_newreply_contentLV4 {
+    margin-left : 49px;
+}
+.txt_newreply_contentLV5 {
+    margin-left : 64px;
+}
