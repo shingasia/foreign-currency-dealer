@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="COMMON_CODE_NS">
+    
+    <select id="selectCommonCodeByMainCode" parameterType="com.sp6mybatis.pro1.dto.system.common.CommonCodeDTO" resultType="com.sp6mybatis.pro1.dto.system.common.CommonCodeDTO">
+        SELECT
+            <trim suffixOverrides=",">
+            A.com_code1,
+            A.com_code2,
+            A.com_code3,
+            A.code_nm,
+            A.memo,
+            </trim>
+        FROM   common_code AS A
+        WHERE  A.com_code1 = #{comcode1}
+        AND    A.use_yn    = 1
+        ORDER BY A.com_code2 ASC
+    </select>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+예제1) https://www.programmersought.com/article/90065326564/
+-->
+<mapper namespace="EducationNS">
+    <!-- map-underscore-to-camel-case: true    # USER_NAME -> userName 매핑 허용 -->
+    <select id="selectEducationAll" resultType="com.sp6mybatis.pro1.dto.education.EducationDTO1">
+        SELECT A.SEQ,
+               A.EDU_SUBJECT,
+               (CASE A.EDU_STATE
+                    WHEN '01' THEN '접수대기'
+                    WHEN '02' THEN '접수중'
+                    WHEN '03' THEN '접수마감'
+                    ELSE NULL
+                END) AS EDU_STATE,
+               A.EDU_ORGANIZATION,
+               A.EDU_TARGET,
+               A.EDU_APPLY_SDATE,
+               A.EDU_APPLY_EDATE,
+               A.EDU_RUNNING_SDATE,
+               A.EDU_RUNNING_EDATE,
+               A.EDU_RECEIPT_GBN,
+               A.EDU_RECRUIT_NUMBER,
+               A.EDU_LOCATION,
+               A.EDU_INQUIRY_CALL,
+               NOW(6)        AS META_DATA1,
+               NULL          AS META_DATA2,
+               'META_DATA3'  AS META_DATA3
+        FROM   POST_EDUCATION AS A
+    </select>
+</mapper>

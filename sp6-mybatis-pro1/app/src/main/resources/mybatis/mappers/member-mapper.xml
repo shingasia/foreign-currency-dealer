@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+예제1) https://www.programmersought.com/article/90065326564/
+-->
+<mapper namespace="MemberNS">
+    <select id="selectById" parameterType="java.lang.String" resultType="com.sp6mybatis.pro1.dto.member.Member">
+        SELECT
+                seq, id, passwd, name, age, point_1, point_2, point_3,
+                DATE_FORMAT(s_date, '%Y-%m-%d %T') AS s_date, -- mybatis 사용시 에일리어스를 DTO의 프로퍼티 이름과 정확히 일치시켜야 함 =&gt; 나는 둘 다 스테이크 케이스로 지정함
+                DATE_FORMAT(e_date, '%Y-%m-%d %T') AS e_date,
+                memo
+        FROM    member
+        WHERE   id = #{id}
+    </select>
+    <select id="selectMemberAll" resultType="com.sp6mybatis.pro1.dto.member.Member">
+        SELECT
+                seq, id, passwd, name, age, point_1, point_2, point_3,
+                DATE_FORMAT(s_date, '%Y-%m-%d %T') AS s_date, -- mybatis 사용시 에일리어스를 DTO의 프로퍼티 이름과 정확히 일치시켜야 함 =&gt; 나는 둘 다 스테이크 케이스로 지정함
+                DATE_FORMAT(e_date, '%Y-%m-%d %T') AS e_date,
+                memo
+        FROM    member
+        ORDER BY seq ASC
+    </select>
+
+    <insert id="insertNewMember" parameterType="com.sp6mybatis.pro1.dto.member.Member" useGeneratedKeys="true" keyProperty="seq">
+        INSERT INTO member (
+            seq, id, passwd, name, age,
+            point_1, point_2, point_3, s_date, e_date, memo
+        ) VALUES (
+            DEFAULT, #{id}, #{passwd}, #{name}, #{age},
+            #{point_1}, #{point_2}, #{point_3}, #{s_date}, #{e_date}, #{memo}
+        )
+        <selectKey keyProperty="seq" keyColumn="seq" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+</mapper>

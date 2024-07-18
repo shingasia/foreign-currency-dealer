@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SELLING_NS">
+    <select id="insertNewSelling" parameterType="com.sp6mybatis.pro1.dto.selling.SellingDTO" resultType="com.sp6mybatis.pro1.dto.selling.SellingDTO">
+        INSERT INTO foreign_currency_selling (
+            <trim suffixOverrides=",">
+            sell_id,
+            title,
+            money_code1,
+            amount1,
+            money_code2,
+            amount2,
+            latitude,
+            longitude,
+            region_code,
+            region_1depth,
+            region_2depth,
+            region_3depth,
+            region_4depth,
+            addr1,
+            addr2,
+            memo,
+            writer,
+            write_date,
+            updater,
+            update_date,
+            sold_yn,
+            </trim>
+        ) VALUES (
+            <trim suffixOverrides=",">
+            DEFAULT,
+            #{title},
+            #{moneyCode1},
+            #{amount1},
+            #{moneyCode2},
+            #{amount2},
+            #{latitude},
+            #{longitude},
+            #{regionCode},
+            #{region1depth},
+            #{region2depth},
+            #{region3depth},
+            #{region4depth},
+            #{addr1},
+            #{addr2},
+            #{memo},
+            #{writer},
+            NOW(6),
+            NULL,
+            NULL,
+            0,
+            </trim>
+        ) RETURNING *
+    </select>
+
+    <sql id="QUERY_WHERE_selectSellingList">
+        <if test="paramMap.q_title != null and paramMap.q_title != ''">
+        AND   A.title LIKE CONCAT('%', #{paramMap.q_title}, '%')
+        </if>
+        <if test="paramMap.q_region_code != null and paramMap.q_region_code != ''">
+            <choose>
+                <when test="paramMap.q_region_depth == 1">
+                    AND   A.region_code LIKE CONCAT(LEFT(#{paramMap.q_region_code, jdbcType=VARCHAR},2), '%')
+                </when>
+                <when test="paramMap.q_region_depth == 2">
+                    AND   A.region_code LIKE CONCAT(LEFT(#{paramMap.q_region_code, jdbcType=VARCHAR},5), '%')
+                </when>
+                <when test="paramMap.q_region_depth == 3">
+                    AND   A.region_code LIKE CONCAT(LEFT(#{paramMap.q_region_code, jdbcType=VARCHAR},8), '%')
+                </when>
+                <when test="paramMap.q_region_depth == 4">
+                    AND   A.region_code LIKE CONCAT(#{paramMap.q_region_code, jdbcType=VARCHAR}, '%')
+                </when>
+                <otherwise>
+                    AND   1=1
+                </otherwise>
+            </choose>
+        </if>
+        <if test='paramMap.q_money_code1 != null and paramMap.q_money_code1 != ""'>
+            AND   A.money_code1 = #{paramMap.q_money_code1}
+        </if>
+        <choose>
+            <when test='(paramMap.q_amount1_start != "" and paramMap.q_amount1_end != "") and (paramMap.q_amount1_start != null and paramMap.q_amount1_end != null)'>
+                AND   A.amount1 BETWEEN #{paramMap.q_amount1_start} AND #{paramMap.q_amount1_end}
+            </when>
+            <when test='paramMap.q_amount1_start != "" and paramMap.q_amount1_start != null'>
+                AND   A.amount1 &gt;= #{paramMap.q_amount1_start}
+            </when>
+            <when test='paramMap.q_amount1_end != "" and paramMap.q_amount1_end != null'>
+                AND   A.amount1 &lt;= #{paramMap.q_amount1_end}
+            </when>
+        </choose>
+    </sql>
+
+    <select id="selectSellingList" parameterType="com.sp6mybatis.pro1.dto.selling.SellingDTO" resultType="com.sp6mybatis.pro1.dto.selling.SellingDTO">
+        SELECT
+        <trim suffixOverrides=",">
+            A.sell_id,
+            A.title,
+            A.money_code1,
+            A.amount1,
+            A.money_code2,
+            A.amount2,
+            CONCAT(A.region_1depth,' ',A.region_2depth,' ',A.region_3depth,' ',A.region_4depth) AS region_name,
+            DATE_FORMAT(A.write_date, '%Y-%m-%d') AS write_date,
+            A.latitude,
+            A.longitude,
+        </trim>
+        FROM foreign_currency_selling AS A
+        WHERE A.write_date BETWEEN #{paramMap.q_write_sdate} AND #{paramMap.q_write_edate}
+        <include refid="QUERY_WHERE_selectSellingList" />
+        ORDER BY A.sell_id ASC
+        LIMIT #{paramMap.q_rowPerPage}
+        OFFSET #{paramMap.q_pagingStartNum}
+    </select>
+
+    <select id="selectSellingListCount" parameterType="com.sp6mybatis.pro1.dto.selling.SellingDTO" resultType="int">
+        SELECT
+            COUNT(*) AS TOTAL_CNT
+        FROM foreign_currency_selling AS A
+        WHERE A.write_date BETWEEN #{paramMap.q_write_sdate} AND #{paramMap.q_write_edate}
+        <include refid="QUERY_WHERE_selectSellingList" />
+    </select>
+</mapper>
+
