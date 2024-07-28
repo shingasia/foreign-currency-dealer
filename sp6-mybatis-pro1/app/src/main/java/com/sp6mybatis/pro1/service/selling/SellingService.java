@@ -26,4 +26,10 @@ public class SellingService {
     public int selectSellingListCount(SellingDTO sellingDto) {
         return sellingDao.selectSellingListCount(sellingDto);
     }
+    public List<List<Map<String, Object>>> selectMultipleResultSet1() {
+        return sellingDao.selectMultipleResultSet1();
+    }
+    public List<List<Map<String, Object>>> selectMultipleResultSet2() {
+        return sellingDao.selectMultipleResultSet2();
+    }
 }

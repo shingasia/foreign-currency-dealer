@@ -122,5 +122,30 @@
         WHERE A.write_date BETWEEN #{paramMap.q_write_sdate} AND #{paramMap.q_write_edate}
         <include refid="QUERY_WHERE_selectSellingList" />
     </select>
-</mapper>
+    
 
+
+
+    <resultMap type="hashmap" id="stats01"></resultMap>
+    <resultMap type="hashmap" id="stats02"></resultMap>
+    <resultMap type="hashmap" id="stats03"></resultMap>
+    <resultMap type="hashmap" id="stats04"></resultMap>
+    <resultMap type="hashmap" id="stats05"></resultMap>
+    <resultMap type="hashmap" id="stats06">
+        <result column="region_code" jdbcType="VARCHAR"/>
+        <result column="region_name" jdbcType="VARCHAR"/>
+        <result column="region_level" jdbcType="INTEGER"/>
+        <result column="up_region_code" jdbcType="VARCHAR"/>
+        <result column="selling_cnt" jdbcType="INTEGER"/>
+        <result column="ratio" jdbcType="DOUBLE"/>
+    </resultMap>
+    <select id="selectMultipleResultSet1" resultMap="stats01,stats02,stats03,stats04,stats05,stats06">
+        { CALL P_SELLING_STATS_01() }
+    </select>
+
+
+    <!-- 얘는 안되네 -->
+    <select id="selectMultipleResultSet2" statementType="CALLABLE" resultSets="java.util.HashMap,java.util.HashMap,java.util.HashMap,java.util.HashMap,java.util.HashMap,java.util.HashMap">
+        { CALL P_SELLING_STATS_01() }
+    </select>
+</mapper>

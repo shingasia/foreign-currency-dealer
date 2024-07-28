@@ -26,4 +26,12 @@ public class SellingDao {
     public int selectSellingListCount(SellingDTO sellingDto) {
         return sqlSession.selectOne("SELLING_NS.selectSellingListCount", sellingDto);
     }
+
+    public List<List<Map<String, Object>>> selectMultipleResultSet1() {
+        return sqlSession.selectList("SELLING_NS.selectMultipleResultSet1");
+    }
+
+    public List<List<Map<String, Object>>> selectMultipleResultSet2() {
+        return sqlSession.selectList("SELLING_NS.selectMultipleResultSet2");
+    }
 }

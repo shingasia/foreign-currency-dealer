@@ -83,6 +83,26 @@ public class SellingController {
         return list;
     }
 
+    @ResponseBody
+    @RequestMapping(value = {"/selectMultipleResultSet1"}, method = { RequestMethod.GET, RequestMethod.POST })
+    public List<List<Map<String, Object>>> selectMultipleResultSet1(HttpServletRequest request, HttpServletResponse response) {
+        List<List<Map<String, Object>>> multiResults = sellingSvc.selectMultipleResultSet1();
+        System.out.println("결과집합 개수 ===> " + multiResults.size());
+        System.out.println(multiResults.get(0));
+        System.out.println(multiResults.get(1));
+        System.out.println(multiResults.get(2));
+        System.out.println(multiResults.get(3));
+        System.out.println(multiResults.get(4));
+        return multiResults;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"/selectMultipleResultSet2"}, method = { RequestMethod.GET, RequestMethod.POST })
+    public List<List<Map<String, Object>>> selectMultipleResultSet2(HttpServletRequest request, HttpServletResponse response) {
+        List<List<Map<String, Object>>> multiResults = sellingSvc.selectMultipleResultSet2();
+        return multiResults;
+    }
+
 }
 /*
 curl ^
@@ -98,4 +118,7 @@ curl ^
 -H "Content-Type: application/json" ^
 -d "{\"q_write_sdate\":\"2023-01-01\", \"q_write_edate\":\"2024-12-31\", \"q_title\":\"\", \"q_region_code\":\"1100000000\", \"q_region_depth\":1, \"q_money_code1\":\"JPY\", \"q_amount1_start\":\"\", \"q_amount1_end\":\"20000\", \"q_rowPerPage\":30, \"q_pagingStartNum\":0}" ^
 http://localhost:8080/sp6-mybatis-pro1/selling/searchSelling
+
+curl -X GET http://localhost:8080/sp6-mybatis-pro1/selling/selectMultipleResultSet1
+curl -X GET http://localhost:8080/sp6-mybatis-pro1/selling/selectMultipleResultSet2
 */
